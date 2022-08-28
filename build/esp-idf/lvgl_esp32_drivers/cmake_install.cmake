@@ -1,4 +1,4 @@
-# Install script for directory: F:/my_lvgl/blink/components/lvgl_esp32_drivers
+# Install script for directory: F:/my_lvgl/esp32_FCC/components/lvgl_esp32_drivers
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

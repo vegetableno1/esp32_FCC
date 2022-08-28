@@ -31,9 +31,9 @@
  
 #include "preloader.h"
 
-#include "F:\my_lvgl\blink\components\ble_gatts\ble_gatts.h"
-#include "F:\my_lvgl\blink\components\uart\uart.h"
-#include "F:\my_lvgl\blink\components\gpio\gpio.h"
+#include "F:\my_lvgl\esp32_FCC\components\ble_gatts\ble_gatts.h"        //修改为本地存储的目录名
+#include "F:\my_lvgl\esp32_FCC\components\uart\uart.h"
+#include "F:\my_lvgl\esp32_FCC\components\gpio\gpio.h"
 
 /*********************
  *      DEFINES
@@ -46,19 +46,6 @@
 static void lv_tick_task(void *arg);
 static void guiTask(void *pvParameter);
 static void create_demo_application(void);
- 
-/**********************
- *   APPLICATION MAIN
- **********************/
-void app_main() {
-    uart_app();
-    goio_main();
-    ble_app();
-    /* If you want to use a task to create the graphic, you NEED to create a Pinned task
-     * Otherwise there can be problem such as memory corruption and so on.
-     * NOTE: When not using Wi-Fi nor Bluetooth you can pin the guiTask to core 0 */
-    xTaskCreatePinnedToCore(guiTask, "gui", 4096*2, NULL, 0, NULL, 1);
-}
  
 /* Creates a semaphore to handle concurrent call to lvgl stuff
  * If you wish to call *any* lvgl function from other threads/tasks
@@ -160,8 +147,10 @@ static void guiTask(void *pvParameter) {
  
 static void create_demo_application(void)
 {
-    create_preloader_demo();
-    //lv_font_demo();
+    if(running == 0xFF)
+        create_preloader_demo();
+    else if(running == 0x00)
+        lv_font_demo();
 }
  
 static void lv_tick_task(void *arg) {
@@ -170,3 +159,15 @@ static void lv_tick_task(void *arg) {
     lv_tick_inc(LV_TICK_PERIOD_MS);
 }
 
+/**********************
+ *   APPLICATION MAIN
+ **********************/
+void app_main() {
+    uart_app();
+    goio_main();
+    ble_app();
+    /* If you want to use a task to create the graphic, you NEED to create a Pinned task
+     * Otherwise there can be problem such as memory corruption and so on.
+     * NOTE: When not using Wi-Fi nor Bluetooth you can pin the guiTask to core 0 */
+    xTaskCreatePinnedToCore(guiTask, "gui", 4096*2, NULL, 0, NULL, 1);
+}

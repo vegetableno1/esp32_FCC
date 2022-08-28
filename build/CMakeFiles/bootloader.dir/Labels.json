@@ -2,34 +2,34 @@
 	"sources" : 
 	[
 		{
-			"file" : "F:/my_lvgl/blink/build/CMakeFiles/bootloader"
+			"file" : "F:/my_lvgl/esp32_FCC/build/CMakeFiles/bootloader"
 		},
 		{
-			"file" : "F:/my_lvgl/blink/build/CMakeFiles/bootloader.rule"
+			"file" : "F:/my_lvgl/esp32_FCC/build/CMakeFiles/bootloader.rule"
 		},
 		{
-			"file" : "F:/my_lvgl/blink/build/CMakeFiles/bootloader-complete.rule"
+			"file" : "F:/my_lvgl/esp32_FCC/build/CMakeFiles/bootloader-complete.rule"
 		},
 		{
-			"file" : "F:/my_lvgl/blink/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule"
+			"file" : "F:/my_lvgl/esp32_FCC/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule"
 		},
 		{
-			"file" : "F:/my_lvgl/blink/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule"
+			"file" : "F:/my_lvgl/esp32_FCC/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule"
 		},
 		{
-			"file" : "F:/my_lvgl/blink/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule"
+			"file" : "F:/my_lvgl/esp32_FCC/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule"
 		},
 		{
-			"file" : "F:/my_lvgl/blink/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule"
+			"file" : "F:/my_lvgl/esp32_FCC/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule"
 		},
 		{
-			"file" : "F:/my_lvgl/blink/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule"
+			"file" : "F:/my_lvgl/esp32_FCC/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule"
 		},
 		{
-			"file" : "F:/my_lvgl/blink/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule"
+			"file" : "F:/my_lvgl/esp32_FCC/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule"
 		},
 		{
-			"file" : "F:/my_lvgl/blink/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule"
+			"file" : "F:/my_lvgl/esp32_FCC/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule"
 		}
 	],
 	"target" : 

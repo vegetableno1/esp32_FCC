@@ -1,11 +1,11 @@
-/* UART Events Example
+// /* UART Events Example
 
-   This example code is in the Public Domain (or CC0 licensed, at your option.)
+//    This example code is in the Public Domain (or CC0 licensed, at your option.)
 
-   Unless required by applicable law or agreed to in writing, this
-   software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
-   CONDITIONS OF ANY KIND, either express or implied.
-*/
+//    Unless required by applicable law or agreed to in writing, this
+//    software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+//    CONDITIONS OF ANY KIND, either express or implied.
+// */
 #include <stdio.h>
 #include <string.h>
 #include "freertos/FreeRTOS.h"
@@ -35,10 +35,11 @@
 #define BUF_SIZE (1024)
 #define RD_BUF_SIZE (BUF_SIZE)
 
+static char running = 0xFF;
+static const int RX_BUF_SIZE = 1024;
+
 static const char *TAG = "uart_events";
 static QueueHandle_t uart0_queue;
-
-static void uart_event_task(void *pvParameters);
 
 static void uart_event_task(void *pvParameters)
 {
@@ -121,6 +122,54 @@ static void uart_event_task(void *pvParameters)
     vTaskDelete(NULL);
 }
 
+int sendData(const char* logName, const char* data)
+{
+    const int len = strlen(data);                               //获取数据长度  字符数据       
+    const int txBytes = uart_write_bytes(EX_UART_NUM, data, len);//发送数据
+    ESP_LOGI(logName, "Wrote %d bytes", txBytes);               //log打印
+    return txBytes;
+}
+
+static void tx_task(void *arg)
+{
+    static const char *TX_TASK_TAG = "TX_TASK";                 //发送内容
+    esp_log_level_set(TX_TASK_TAG, ESP_LOG_INFO);               //设置log打印等级
+    while (1) {
+        if(in == 0x01){
+            sendData(TX_TASK_TAG, "1");
+            in = 0xFF;
+            running = 0x00;
+        }
+
+        if(out == 0x10){
+            sendData(TX_TASK_TAG, "0");
+            out = 0xFF;
+            running = 0x00;
+        }                   //发送数据
+        vTaskDelay(2000 / portTICK_PERIOD_MS);                  //延时
+    }
+}
+
+static void rx_task(void *arg)
+{
+    static const char *RX_TASK_TAG = "RX_TASK";                 //接收任务
+    esp_log_level_set(RX_TASK_TAG, ESP_LOG_INFO);               //设置log打印
+    uint8_t* data = (uint8_t*) malloc(RX_BUF_SIZE+1);           //申请动态内存
+    while (1) {
+        const int rxBytes = uart_read_bytes(UART_NUM_0, data, RX_BUF_SIZE, 1000 / portTICK_RATE_MS);//读取数据
+        if (rxBytes > 0) {                                      //判断数据长度
+            data[rxBytes] = 0;                                  //清空data中的数据
+            ESP_LOGI(RX_TASK_TAG, "Read %d bytes: '%s'", rxBytes, data);        //log打印
+            ESP_LOG_BUFFER_HEXDUMP(RX_TASK_TAG, data, rxBytes, ESP_LOG_INFO);   //打印16进制数据
+            // if(*data == 'E'){
+            //     running = 0xFF;
+            // }
+
+        }
+    }
+    free(data);                                                 //释放内存
+}
+
 void uart_app(void)
 {
     esp_log_level_set(TAG, ESP_LOG_INFO);
@@ -151,5 +200,7 @@ void uart_app(void)
     uart_pattern_queue_reset(EX_UART_NUM, 20);
 
     //Create a task to handler UART event from ISR
-    xTaskCreate(uart_event_task, "uart_event_task", 2048, NULL, 12, NULL);
+   //xTaskCreate(uart_event_task, "uart_event_task", 2048, NULL, 12, NULL);
+    xTaskCreate(tx_task, "uart_tx_task", 1024*2, NULL, configMAX_PRIORITIES-1, NULL);   //发送任务
+    //xTaskCreate(rx_task, "uart_rx_task", 1024*2, NULL, configMAX_PRIORITIES, NULL);     //接收任务
 }

@@ -1,4 +1,4 @@
-# Install script for directory: F:/my_lvgl/blink/components/preloader
+# Install script for directory: F:/my_lvgl/esp32_FCC/components/preloader
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

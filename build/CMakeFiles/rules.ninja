@@ -1584,7 +1584,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_preloader_
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = D:\Espressif\tools\cmake\3.20.3\bin\cmake.exe --regenerate-during-build -SF:\my_lvgl\blink -BF:\my_lvgl\blink\build
+  command = D:\Espressif\tools\cmake\3.20.3\bin\cmake.exe --regenerate-during-build -SF:\my_lvgl\esp32_FCC -BF:\my_lvgl\esp32_FCC\build
   description = Re-running CMake...
   generator = 1
 

@@ -21,10 +21,13 @@
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "freertos/queue.h"
 #include "freertos/event_groups.h"
 #include "esp_system.h"
 #include "esp_log.h"
 #include "nvs_flash.h"
+#include "driver/uart.h"
+#include "driver/gpio.h"
 #include "esp_bt.h"
 
 #include "esp_gap_ble_api.h"
@@ -50,6 +53,9 @@
 #define ADV_CONFIG_FLAG             (1 << 0)
 #define SCAN_RSP_CONFIG_FLAG        (1 << 1)
 
+
+static char out = 0xFF;
+static char in = 0xFF;
 /* Attributes State Machine */
 enum
 {
@@ -430,6 +436,7 @@ static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_
                         //     notify_data[i] = i % 0xff;
                         // }
                         //the size of notify_data[] need less than MTU size
+                        in = 0x01;
                         esp_ble_gatts_send_indicate(gatts_if, param->write.conn_id, heart_rate_handle_table[IDX_CHAR_VAL_A],
                                                 sizeof(notify_data), notify_data, false);
                         
@@ -446,6 +453,7 @@ static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_
                     }
                     else if (descr_value == 0x0000){//出水命令
                         ESP_LOGI(GATTS_TABLE_TAG, "notify/indicate disable ");
+                        out = 0x10;
                     }else{
                         ESP_LOGE(GATTS_TABLE_TAG, "unknown descr value");
                         esp_log_buffer_hex(GATTS_TABLE_TAG, param->write.value, param->write.len);

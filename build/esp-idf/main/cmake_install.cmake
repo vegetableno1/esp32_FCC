@@ -1,4 +1,4 @@
-# Install script for directory: F:/my_lvgl/blink/main
+# Install script for directory: F:/my_lvgl/esp32_FCC/main
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

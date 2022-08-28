@@ -1,4 +1,4 @@
-/* * Data converted from F:/my_lvgl/blink/build/esp-idf/mbedtls/x509_crt_bundle
+/* * Data converted from F:/my_lvgl/esp32_FCC/build/esp-idf/mbedtls/x509_crt_bundle
  */
 .data
 .section .rodata.embedded

@@ -39,7 +39,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("F:/my_lvgl/blink/build/bootloader/esp-idf/soc/esp32c3/cmake_install.cmake")
+  include("F:/my_lvgl/esp32_FCC/build/bootloader/esp-idf/soc/esp32c3/cmake_install.cmake")
 
 endif()
 
